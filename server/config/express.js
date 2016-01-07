@@ -13,5 +13,5 @@ module.exports = function configureExpress (app) {
 	app.use(express.static(path.join(__dirname, '../..', 'public')));
 
 	var node_env = process.env.NODE_ENV;
-	var port = (node_env === 'production') ? app.get('port') : 3000;
+	var port = (node_env === 'production') ? app.get('port') : 9900;
 }

@@ -1,16 +1,19 @@
+require('babel-polyfill');
+
 var path = require('path');
 var webpack = require('webpack');
 var rucksack = require('rucksack-css');
+var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 
 var assetsPath = path.join(__dirname, '..', 'public', 'assets');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'));
 
 var commonLoaders = [
   {
     test: /\.(js|jsx)$/,
-    exclude: /node_modules/,
     include: path.join(__dirname, '..', 'app'),
-    loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage0']
+    loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0']
   },
   {
     test: /\.html$/,
@@ -23,6 +26,10 @@ var commonLoaders = [
       'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
       'postcss-loader'
     ]
+  },
+  { 
+    test: webpackIsomorphicToolsPlugin.regular_expression('images'),
+    loader: 'url-loader?limit=10240'
   }
 ];
 
@@ -41,8 +48,14 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify('development') }
-    })
+      'process.env': { NODE_ENV: JSON.stringify('development') },
+      _CLIENT_: true,
+      _SERVER_: false,
+      _PRODUCTION_: false,
+      _DEVELOPMENT_: true,
+      _DEVELOPMENT_TOOLS_: false
+    }),
+    webpackIsomorphicToolsPlugin.development()
   ],
   module: {
     loaders: commonLoaders.concat()

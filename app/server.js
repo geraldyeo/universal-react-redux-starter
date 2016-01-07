@@ -36,7 +36,7 @@ function renderHTMLPage (renderedContent, initialState, head = {
 			<script>
 				window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
 			</script>
-			<script src="/static/bundle.js"></script>
+			<script src="/assets/app.js"></script>
 		</body>
 		</html>
 	`;

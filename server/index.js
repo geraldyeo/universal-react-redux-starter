@@ -2,9 +2,9 @@ var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 var config = require('../conf/webpack.config.dev');
+
 var app = express();
 var compiler = webpack(config);
-
 var isDev = process.env.NODE_ENV === 'development';
 
 // Development hot reloading
