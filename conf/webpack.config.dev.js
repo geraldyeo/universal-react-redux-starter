@@ -2,11 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 var rucksack = require('rucksack-css');
 
+var assetsPath = path.join(__dirname, '..', 'public', 'assets');
+var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
+
 var commonLoaders = [
   {
     test: /\.(js|jsx)$/,
     exclude: /node_modules/,
-    loaders: ['babel?presets[]=react,presets[]=es2015']
+    include: path.join(__dirname, '..', 'app'),
+    loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage0']
   },
   {
     test: /\.html$/,
@@ -24,15 +28,14 @@ var commonLoaders = [
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
-    'webpack-hot-middleware/client',
-    './client'
-  ],
+  context: path.join(__dirname, '..', 'app'),
+  entry: {
+    app: ['./client', 'eventsource-polyfill', hotMiddlewareScript]
+  },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: assetsPath,
+    filename: '[name].js',
+    publicPath: '/assets/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -43,6 +46,10 @@ module.exports = {
   ],
   module: {
     loaders: commonLoaders.concat()
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+    modulesDirectories: ['app', 'node_modules']
   },
   postcss: [
     rucksack({

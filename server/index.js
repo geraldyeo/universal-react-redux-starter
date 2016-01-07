@@ -6,8 +6,8 @@ var app = express();
 var compiler = webpack(config);
 
 var isDev = process.env.NODE_ENV === 'development';
-var port = process.env.PORT || 9090;
 
+// Development hot reloading
 if (isDev) {
 	app.use(require('webpack-dev-middleware')(compiler, {
 		noInfo: true,
@@ -16,14 +16,17 @@ if (isDev) {
 	app.use(require('webpack-hot-middleware')(compiler));
 }
 
-app.get('*', function (req, res) {
-	res.sendFile(path.join(__dirname, 'index.html'));
-});
+// Bootstrap express
+require('./config/express')(app);
 
-app.listen(port, 'localhost', function (err) {
+// Bootstrap routes
+require('./config/routes')(app);
+
+// Start
+app.listen(app.get('port'), 'localhost', function (err) {
 	if (err) {
 		console.log(err);
 		return;
 	}
-	console.log('Listening at http://localhost:' + port);
+	console.log('Listening at http://localhost:' + app.get('port'));
 });
