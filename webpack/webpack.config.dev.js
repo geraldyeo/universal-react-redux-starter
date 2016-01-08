@@ -7,7 +7,7 @@ var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 
 var assetsPath = path.join(__dirname, '..', 'public', 'assets');
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
-var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-configuration'));
+var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools.config'));
 
 var commonLoaders = [
   {
@@ -49,11 +49,11 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify('development') },
-      _CLIENT_: true,
-      _SERVER_: false,
-      _PRODUCTION_: false,
-      _DEVELOPMENT_: true,
-      _DEVELOPMENT_TOOLS_: false
+      __CLIENT__: true,
+      __SERVER__: false,
+      __PRODUCTION__: false,
+      __DEVELOPMENT__: true,
+      __DEVELOPMENT_TOOLS__: false
     }),
     webpackIsomorphicToolsPlugin.development()
   ],

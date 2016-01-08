@@ -13,5 +13,12 @@ module.exports = function configureExpress (app) {
 	app.use(express.static(path.join(__dirname, '../..', 'public')));
 
 	var node_env = process.env.NODE_ENV;
-	var port = (node_env === 'production') ? app.get('port') : 9900;
+	
+	app.use(function (req, res) {
+		if (__DEVELOPMENT__) {
+			webpackIsomorphicTools.refresh();
+			console.log('yay');
+		}
+	});
+
 }
