@@ -40,7 +40,7 @@ export default function configureServer (app, proxy) {
 
 		const client = new ApiClient(req);
 
-		function hydrateOnClient() {
+		function hydrateOnClient () {
 			res.status(200)
 				.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} />));
 		}

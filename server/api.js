@@ -12,7 +12,6 @@ const server = new http.Server(app);
 const io = new SocketIo(server);
 io.path('/ws');
 
-
 const bufferSize = 100;
 const messageBuffer = new Array(bufferSize);
 let messageIndex = 0;
@@ -48,5 +47,5 @@ if (config.apiPort) {
 	});
 	io.listen(runnable);
 } else {
-  console.error('==>     ERROR: No PORT environment variable has been specified');
+	console.error('==>     ERROR: No PORT environment variable has been specified');
 }

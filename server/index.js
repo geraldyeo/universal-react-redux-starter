@@ -1,4 +1,3 @@
-import path from 'path';
 import http from 'http';
 import httpProxy from 'http-proxy';
 import PrettyError from 'pretty-error';

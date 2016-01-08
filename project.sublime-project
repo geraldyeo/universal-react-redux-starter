@@ -1,0 +1,7 @@
+{
+	"settings": {
+		"default_line_ending": unix,
+		"translate_spaces_to_tabs": true,
+		"trim_trailing_white_space_on_save": true
+	}
+}
