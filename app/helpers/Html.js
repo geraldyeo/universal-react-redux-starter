@@ -18,10 +18,17 @@ export default class HTML extends Component {
     	return (
     		<html>
     			<head>
+                    {head && head.base.toComponent()}
+                    {head && head.title.toComponent()}
+                    {head && head.meta.toComponent()}
+                    {head && head.link.toComponent()}
+                    {head && head.script.toComponent()}
+
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
     			</head>
     			<body>
     				<div id="root" dangerouslySetInnerHTML={{__html: content}}/>
-    				
+    				<script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
     				<script src={assets.javascript.main} charSet="UTF-8"/>
     			</body>
     		</html>

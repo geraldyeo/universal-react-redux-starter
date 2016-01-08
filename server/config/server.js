@@ -1,10 +1,9 @@
 import path from 'path';
-import serialize from 'serialize-javascript';
 import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import Helmet from 'react-helmet';
 
+import ApiClient from '../../app/helpers/ApiClient';
 import Html from '../../app/helpers/Html';
 
 export default function configureServer (app, proxy) {
@@ -39,10 +38,11 @@ export default function configureServer (app, proxy) {
 			webpackIsomorphicTools.refresh();
 		}
 
+		const client = new ApiClient(req);
+
 		function hydrateOnClient() {
 			res.status(200)
 				.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} />));
-			// res.status(200).send('<!doctype html>');
 		}
 
 		if (__DISABLE_SSR__) {
