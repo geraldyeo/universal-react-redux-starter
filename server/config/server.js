@@ -1,8 +1,11 @@
 import path from 'path';
+import serialize from 'serialize-javascript';
 import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import HTML from '../../app/helpers/Html';
+import Helmet from 'react-helmet';
+
+import Html from '../../app/helpers/Html';
 
 export default function configureServer (app, proxy) {
 	// X-Powered-By header has no functional value.
@@ -10,7 +13,7 @@ export default function configureServer (app, proxy) {
 	// It can be removed safely
 	app.disable('x-powered-by');
 
-	app.use(Express.static(path.join(__dirname, '../..', 'public')));
+	app.use(Express.static(path.join(__dirname, '../..', 'static')));
 
 	// Proxy to API server
 	app.use('/api', (req, res) => {
@@ -37,9 +40,9 @@ export default function configureServer (app, proxy) {
 		}
 
 		function hydrateOnClient() {
-			 // res.send('<!doctype html>\n' +
-			 // 	renderToString(<Html assets={webpackIsomorphicTools.assets()} />));
-			res.status(200).send('<!doctype html>');
+			res.status(200)
+				.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} />));
+			// res.status(200).send('<!doctype html>');
 		}
 
 		if (__DISABLE_SSR__) {

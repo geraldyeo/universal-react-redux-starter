@@ -17,6 +17,7 @@
       "env": {
         "NODE_PATH": "./server",
         "NODE_ENV": "development",
+        "BABEL_ENV": "development",
         "PORT": 9000,
         "APIPORT": 9030
       }

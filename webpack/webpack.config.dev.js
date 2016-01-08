@@ -15,7 +15,10 @@ var commonLoaders = [
   {
     test: /\.(js|jsx)$/,
     exclude: /node_modules/,
-    loaders: ['babel-loader?cacheDirectory']
+    loader: 'babel',
+    query: {
+      presets: ['react-hmre']
+    }
   },
   {
     test: /\.css$/,
