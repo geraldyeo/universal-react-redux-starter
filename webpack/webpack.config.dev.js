@@ -4,20 +4,21 @@ var path = require('path');
 var webpack = require('webpack');
 var rucksack = require('rucksack-css');
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-
-var assetsPath = path.join(__dirname, '..', 'public', 'assets');
-var hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools.config'));
+
+var assetsPath = path.resolve(__dirname, '../static/dist');
+var host = (process.env.HOST || 'localhost');
+var port = parseInt(process.env.PORT) + 1 || 9001;
+var hotMiddlewareScript = 'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr';
+
+
+
 
 var commonLoaders = [
   {
     test: /\.(js|jsx)$/,
-    include: path.join(__dirname, '..', 'app'),
+    exclude: /node_modules/,
     loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0']
-  },
-  {
-    test: /\.html$/,
-    loader: 'file?name=[name].[ext]'
   },
   {
     test: /\.css$/,
@@ -34,15 +35,16 @@ var commonLoaders = [
 ];
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
-  context: path.join(__dirname, '..', 'app'),
+  devtool: 'inline-source-map',
+  context: path.resolve(__dirname, '..'),
   entry: {
-    app: ['./client', 'eventsource-polyfill', hotMiddlewareScript]
+    main: ['./app/client.js', hotMiddlewareScript]
   },
   output: {
     path: assetsPath,
-    filename: '[name].js',
-    publicPath: '/assets/'
+    filename: '[name]-[hash].js',
+    chunkFilename: '[name]-[chunkhash].js',
+    publicPath: 'http://' + host + ':' + port + '/dist/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -60,8 +62,9 @@ module.exports = {
   module: {
     loaders: commonLoaders.concat()
   },
+  progress: true,
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.json', '.js', '.jsx'],
     modulesDirectories: ['app', 'node_modules']
   },
   postcss: [

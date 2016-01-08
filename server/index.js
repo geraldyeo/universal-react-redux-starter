@@ -1,32 +1,37 @@
-var path = require('path');
-var express = require('express');
-var webpack = require('webpack');
-var config = require('../conf/webpack.config.dev');
+import path from 'path';
+import http from 'http';
+import httpProxy from 'http-proxy';
+import PrettyError from 'pretty-error';
+import Express from 'express';
+import React from 'react';
+import ReactDOM from 'react-dom/server';
 
-var app = express();
-var compiler = webpack(config);
-var isDev = process.env.NODE_ENV === 'development';
+import config from '../app/config';
+import configureExpress from './config/express';
+import configureRoutes from './config/routes';
 
-// Development hot reloading
-if (isDev) {
-	app.use(require('webpack-dev-middleware')(compiler, {
-		noInfo: true,
-		publicPath: config.output.publicPath
-	}));
-	app.use(require('webpack-hot-middleware')(compiler));
-}
+const pretty = new PrettyError();
+const app = new Express();
+const server = new http.Server(app);
+const proxy = httpProxy.createProxyServer({
+	target: 'http://' + config.apiHost + ':' + config.apiPort,
+	ws: true
+});
 
 // Bootstrap express
-require('./config/express')(app);
+configureExpress(app);
 
 // Bootstrap routes
-require('./config/routes')(app);
+configureRoutes(app);
 
-// Start
-app.listen(app.get('port'), 'localhost', function (err) {
-	if (err) {
-		console.log(err);
-		return;
-	}
-	console.log('Listening at http://localhost:' + app.get('port'));
-});
+if (config.port) {
+	server.listen(config.port, (err) => {
+		if (err) {
+			console.error(err);
+		}
+		console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
+		console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
+	});
+} else {
+	console.error('==>     ERROR: No PORT environment variable has been specified');
+}

@@ -1,8 +1,9 @@
-var router = require('express').Router();
-//var App = require('../../public/assets/app.server');
+import Router from 'express';
+
+const router = Router();
 
 router.get('*', function (req, res) {
-	//App(req, res);
+	
 });
 
-module.exports = router;
+export router;

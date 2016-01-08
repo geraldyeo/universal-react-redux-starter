@@ -1,24 +1,31 @@
-var path = require('path');
-var express = require('express');
-var httpProxy = require('http-proxy');
+import path from 'path';
+import Express from 'express';
 
-module.exports = function configureExpress (app) {
-	app.set('port', (process.env.PORT || 9090));
-	
+export default function configureExpress (app) {
 	// X-Powered-By header has no functional value.
 	// Keeping it makes it easier for an attacker to build the site's profile
 	// It can be removed safely
 	app.disable('x-powered-by');
 
-	app.use(express.static(path.join(__dirname, '../..', 'public')));
+	app.use(Express.static(path.join(__dirname, '../..', 'public')));
 
-	var node_env = process.env.NODE_ENV;
-	
-	app.use(function (req, res) {
+	app.use((req, res) => {
 		if (__DEVELOPMENT__) {
 			webpackIsomorphicTools.refresh();
-			console.log('yay');
 		}
-	});
 
-}
+		function hydrateOnClient() {
+			// res.send('<!doctype html>\n' +
+			//	ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
+			//	
+			res.send(200, 'Yay');
+		}
+
+		if (__DISABLE_SSR__) {
+			hydrateOnClient();
+			return;
+		}
+
+		hydrateOnClient();
+	});
+};

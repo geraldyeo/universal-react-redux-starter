@@ -1,4 +1,8 @@
-module.exports = function configureRoutes (app) {
-	app.use('/users', require('../routes/users'));
-	app.use('/', require('../routes'));
-}
+export default function configureRoutes (app) {
+	// Proxy to API server
+	app.use('/api', (req, res) => {
+		proxy.web(req, res);
+	});
+
+	// app.use('/users', );
+};
