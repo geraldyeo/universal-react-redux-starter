@@ -11,14 +11,11 @@ var host = (process.env.HOST || 'localhost');
 var port = parseInt(process.env.PORT) + 1 || 9001;
 var hotMiddlewareScript = 'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr';
 
-
-
-
 var commonLoaders = [
   {
     test: /\.(js|jsx)$/,
     exclude: /node_modules/,
-    loaders: ['babel?presets[]=react,presets[]=es2015,presets[]=stage-0']
+    loaders: ['babel-loader?cacheDirectory']
   },
   {
     test: /\.css$/,

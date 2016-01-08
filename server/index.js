@@ -3,12 +3,10 @@ import http from 'http';
 import httpProxy from 'http-proxy';
 import PrettyError from 'pretty-error';
 import Express from 'express';
-import React from 'react';
-import ReactDOM from 'react-dom/server';
+import SocketIo from 'socket.io';
 
 import config from '../app/config';
-import configureExpress from './config/express';
-import configureRoutes from './config/routes';
+import configureServer from './config/server';
 
 const pretty = new PrettyError();
 const app = new Express();
@@ -19,12 +17,14 @@ const proxy = httpProxy.createProxyServer({
 });
 
 // Bootstrap express
-configureExpress(app);
-
-// Bootstrap routes
-configureRoutes(app);
+configureServer(app, proxy);
 
 if (config.port) {
+	if (config.isProduction) {
+		const io = new SocketIo(server);
+		io.path('/api/ws');
+	}
+
 	server.listen(config.port, (err) => {
 		if (err) {
 			console.error(err);
