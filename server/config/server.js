@@ -2,9 +2,12 @@ import path from 'path';
 import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { RoutingContext, match } from 'react-router';
 
-import ApiClient from '../../app/helpers/ApiClient';
-import Html from '../../app/helpers/Html';
+import routes from '../../app/routes';
+import configureStore from '../../common/redux';
+import ApiClient from '../../common/helpers/ApiClient';
+import Html from '../../common/helpers/Html';
 
 export default function configureServer (app, proxy) {
 	// X-Powered-By header has no functional value.
@@ -38,11 +41,13 @@ export default function configureServer (app, proxy) {
 			webpackIsomorphicTools.refresh();
 		}
 
+		// @todo: create store / fetch anything
 		const client = new ApiClient(req);
 
+		const store = configureStore(client);
+
 		function hydrateOnClient () {
-			res.status(200)
-				.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} />));
+			res.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
 		}
 
 		if (__DISABLE_SSR__) {
@@ -50,6 +55,18 @@ export default function configureServer (app, proxy) {
 			return;
 		}
 
-		hydrateOnClient();
+		match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
+			if (error) {
+				res.status(500);
+				hydrateOnClient();
+			} else if (redirectLocation) {
+				res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+			} else if (renderProps) {
+
+			} else {
+				res.status(404);
+				hydrateOnClient();
+			}
+		});
 	});
 }

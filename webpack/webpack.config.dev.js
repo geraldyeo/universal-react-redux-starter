@@ -65,7 +65,7 @@ module.exports = {
   progress: true,
   resolve: {
     extensions: ['', '.json', '.js', '.jsx'],
-    modulesDirectories: ['app', 'node_modules']
+    modulesDirectories: ['node_modules']
   },
   postcss: [
     rucksack({
