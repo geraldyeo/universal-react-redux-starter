@@ -1,9 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import { syncReduxAndRouter } from 'redux-simple-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { Router, browserHistory } from 'react-router';
+import { syncHistory } from 'redux-simple-router';
 // import io from 'socket.io-client';
 
 import routes from './routes';
@@ -11,9 +10,9 @@ import configureStore from '../common/redux';
 import ApiClient from '../common/helpers/ApiClient';
 
 const client = new ApiClient();
-const dest = document.getElementById('app');
+const dest = document.getElementById('root');
 const store = configureStore(client, window.__data);
-const history = createBrowserHistory();
+const router = syncHistory(browserHistory);
 
 // function initSocket () {
 // 	const socket = io('', {path: '/api/ws', transports: ['polling']});
@@ -32,12 +31,12 @@ const history = createBrowserHistory();
 
 // Installs hooks that always keep react-router and redux
 // store in sync
-syncReduxAndRouter(history, store);
+router.syncHistoryToStore(store);
 
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 const component = (
-	<Router history={history}>
+	<Router history={browserHistory}>
 		{routes}
 	</Router>
 );

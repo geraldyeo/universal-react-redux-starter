@@ -1,9 +1,9 @@
 import { createAction } from 'redux-actions';
 
 // constants
-export const INCREMENT_COUNTER = 'COUNTER/INCREMENT';
-export const DECREMENT_COUNTER = 'COUNTER/DECREMENT';
-export const INCREMENT_ASYNC = 'COUNTER/INCREMENT_ASYNC';
+export const INCREMENT_COUNTER = '@@app/counter/INCREMENT';
+export const DECREMENT_COUNTER = '@@app/counter/DECREMENT';
+export const INCREMENT_ASYNC = '@@app/counter/INCREMENT_ASYNC';
 
 const initialState = 0;
 

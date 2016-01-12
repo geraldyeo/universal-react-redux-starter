@@ -1,11 +1,6 @@
-import { call, put, take } from 'redux-saga';
+import { call, put, take, fork } from 'redux-saga';
 import { INCREMENT_ASYNC, increment } from '../modules/counter';
-
-function delay (ms) {
-	return new Promise((resolve, reject) => {
-		setTimeout(resolve, ms);
-	});
-}
+import { delay } from '../../utils';
 
 function * incrementAsync () {
 	while (yield take(INCREMENT_ASYNC)) {
@@ -14,4 +9,6 @@ function * incrementAsync () {
 	}
 }
 
-export default [incrementAsync];
+export default function * root () {
+	yield fork(incrementAsync);
+}

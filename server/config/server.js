@@ -2,7 +2,7 @@ import path from 'path';
 import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { RoutingContext, match } from 'react-router';
+import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 
 import routes from '../../app/routes';
@@ -64,8 +64,8 @@ export default function configureServer (app, proxy) {
 				res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 			} else if (renderProps) {
 				const component = (
-					<Provider>
-						<RoutingContext {...renderProps} />
+					<Provider store={store}>
+						<RouterContext {...renderProps}/>
 					</Provider>
 				);
 

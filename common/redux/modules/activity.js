@@ -1,6 +1,6 @@
-const LOAD = 'ACTIVITY/LOAD';
-const LOAD_SUCCESS = 'ACTIVITY/LOAD_SUCCESS';
-const LOAD_FAIL = 'ACTIVITY/LOAD_FAIL';
+const LOAD = '@@app/activity/LOAD';
+const LOAD_SUCCESS = '@@app/activity/LOAD_SUCCESS';
+const LOAD_FAIL = '@@app/activity/LOAD_FAIL';
 
 const initialState = {
 	loaded: false
