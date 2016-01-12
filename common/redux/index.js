@@ -2,10 +2,12 @@ import createLogger from 'redux-logger';
 import { devTools } from 'redux-devtools';
 
 import { createStore, applyMiddleware, compose } from 'redux';
+import sagaMiddleware from 'redux-saga';
 import rootReducer from './modules';
+import incrementAsync from './middlewares/incrementSaga';
 
 export default function configureStore (client, initialState = {}) {
-	const middlewares = [];
+	const middlewares = [sagaMiddleware(incrementAsync)];
 
 	let finalCreateStore;
 	if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {

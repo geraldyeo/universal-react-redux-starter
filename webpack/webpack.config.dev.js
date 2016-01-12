@@ -31,6 +31,7 @@ var commonLoaders = [
 		exclude: /node_modules/,
 		loader: 'babel-loader',
 		query: {
+			cacheDirectory: true,
 			presets: babelrcObject.presets.concat('react-hmre'),
 			plugins: babelrcObject.plugins
 		}
