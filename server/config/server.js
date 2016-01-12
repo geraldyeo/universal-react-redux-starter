@@ -68,7 +68,7 @@ export default function configureServer (app, proxy) {
 						<RouterContext {...renderProps}/>
 					</Provider>
 				);
-
+				
 				res.status(200)
 					.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
 			} else {

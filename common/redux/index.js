@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './modules';
 // import rootSaga from './middlewares/incrementSaga';
 
-export default function configureStore (client, initialState = {}) {
+export default function configureStore (client, initialState) {
 	const middlewares = [/* sagaMiddleware(rootSaga) */];
 
 	let finalCreateStore;
@@ -14,7 +14,8 @@ export default function configureStore (client, initialState = {}) {
 		finalCreateStore = compose(
 			applyMiddleware(...middlewares),
 			applyMiddleware(createLogger()),
-			devTools()
+			devTools(),
+			typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
 		)(createStore);
 	} else {
 		finalCreateStore = applyMiddleware(...middlewares)(createStore);
