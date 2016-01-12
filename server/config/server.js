@@ -3,6 +3,7 @@ import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RoutingContext, match } from 'react-router';
+import { Provider } from 'react-redux';
 
 import routes from '../../app/routes';
 import configureStore from '../../common/redux';
@@ -62,7 +63,14 @@ export default function configureServer (app, proxy) {
 			} else if (redirectLocation) {
 				res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 			} else if (renderProps) {
+				const component = (
+					<Provider>
+						<RoutingContext {...renderProps} />
+					</Provider>
+				);
 
+				res.status(200)
+					.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
 			} else {
 				res.status(404);
 				hydrateOnClient();

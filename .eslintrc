@@ -1,4 +1,5 @@
 {
+	"parser": "babel-eslint",
 	"extends": ["standard", "standard-react"],
 	"env": {
 		"browser": true,
@@ -7,7 +8,7 @@
 	},
 	"rules": {
 		"indent": [2, "tab"],
-		"react/jsx-quotes": [2, "double", "avoid-escape"],
+		"jsx-quotes": [2, "prefer-double"],
 		"no-extra-semi": 2,
 		"semi": [2, "always"],
 		"semi-spacing": [2, { "before": false, "after": true }]
@@ -17,7 +18,7 @@
 		"__SERVER__": false,
 		"__PRODUCTION__": false,
 		"__DEVELOPMENT__": false,
-		"__DEVELOPMENT_TOOLS__": false,
+		"__DEVTOOLS__": false,
 		"__DISABLE_SSR__": false,
 		"webpackIsomorphicTools": false
 	}

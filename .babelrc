@@ -1,10 +1,11 @@
 {
-	"presets": [
-		"react", 
-		"stage-0", 
-		"es2015"
+	"presets": [ 
+		"es2015",
+		"stage-0",
+		"react"
 	],
 	"plugins": [	
+		"syntax-async-generators",
 		"syntax-class-properties",
 	    "syntax-decorators",
 	    "syntax-object-rest-spread",

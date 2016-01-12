@@ -1,7 +1,8 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './modules';
 import createLogger from 'redux-logger';
 import { devTools } from 'redux-devtools';
+
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from './modules';
 
 export default function configureStore (client, initialState = {}) {
 	const middlewares = [];
@@ -12,7 +13,7 @@ export default function configureStore (client, initialState = {}) {
 			applyMiddleware(...middlewares),
 			applyMiddleware(createLogger()),
 			devTools()
-		)(_createStore);
+		)(createStore);
 	} else {
 		finalCreateStore = applyMiddleware(...middlewares)(createStore);
 	}
