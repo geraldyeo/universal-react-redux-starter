@@ -1,10 +1,11 @@
 import createLogger from 'redux-logger';
 import { devTools } from 'redux-devtools';
 
-import { createHistory } from 'history';
+import { browserHistory } from 'react-router';
 import { syncHistory } from 'redux-simple-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 // import sagaMiddleware from 'redux-saga';
+
 import rootReducer from './modules';
 // import rootSaga from './middlewares/incrementSaga';
 import apiClientMiddleware from './middlewares/apiClientMiddleware';
@@ -12,10 +13,9 @@ import apiClientMiddleware from './middlewares/apiClientMiddleware';
 export default function configureStore (client, initialState) {
 	const commonMiddlewares = [apiClientMiddleware(client)]; // sagaMiddleware(rootSaga)
 
-	let history, reduxRouterMiddleware, finalCreateStore;
+	let reduxRouterMiddleware, finalCreateStore;
 	if (__CLIENT__) {
-		history = createHistory();
-		reduxRouterMiddleware = syncHistory(history);
+		reduxRouterMiddleware = syncHistory(browserHistory);
 		let middlewares = [reduxRouterMiddleware];
 		if (__DEVELOPMENT__ && __DEVTOOLS__) {
 			middlewares.concat(
@@ -49,6 +49,6 @@ export default function configureStore (client, initialState) {
 
 	return {
 		store,
-		history
+		history: browserHistory
 	};
 }
