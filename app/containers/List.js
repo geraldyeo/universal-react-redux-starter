@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class List extends Component {
+export default class List extends Component {
 	render () {
 		return (
 			<div>

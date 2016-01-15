@@ -44,8 +44,7 @@ export default function configureServer (app, proxy) {
 
 		// @todo: create store / fetch anything
 		const client = new ApiClient(req);
-
-		const store = configureStore(client);
+		const { store } = configureStore(client);
 
 		function hydrateOnClient () {
 			res.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
@@ -68,7 +67,7 @@ export default function configureServer (app, proxy) {
 						<RouterContext {...renderProps}/>
 					</Provider>
 				);
-				
+
 				res.status(200)
 					.send('<!doctype html>\n' + renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
 			} else {

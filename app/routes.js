@@ -5,7 +5,7 @@ import App from './containers/App';
 import List from './containers/List';
 
 export default (
-	<Route component={App}>
-		<Route path="/" component={List} />
+	<Route path="/" component={App}>
+		<Route path="list" component={List}/>
 	</Route>
 );
