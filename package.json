@@ -1,15 +1,17 @@
 {
-  "name": "frontend-boilerplate",
+  "name": "universal-reactjs-boilerplate",
   "version": "1.0.0",
-  "description": "Frontend boilerplate.",
+  "description": "Universal ReactJS Boilerplate.",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "happiness",
+	"lint": "eslint -c .eslintrc app common server",
     "start-dev": "better-npm-run start-dev",
     "watch-client": "better-npm-run watch-client",
-    "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\""
+    "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\"",
+	"test": "karma start ./tests/karma.conf.js",
+	"test-node": "find ./tests/server -name '*.test.js' | xargs mocha -R spec --compilers js:babel-core/register",
+	"test-node-watch": "find ./tests/server -name '*.test.js' | xargs mocha -R spec --compilers js:babel-core/register --watch"
   },
   "betterScripts": {
     "start-dev": {
@@ -65,9 +67,18 @@
     "file-loader": "^0.8.5",
     "happiness": "^1.0.7",
     "install": "^0.4.1",
+    "karma": "^0.13.19",
+    "karma-cli": "^0.1.2",
+    "karma-mocha": "^0.2.1",
+    "karma-mocha-reporter": "^1.1.5",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
     "mocha": "^2.3.4",
     "nock": "^3.6.0",
     "npm": "^3.5.3",
+    "phantomjs": "^1.9.19",
+    "phantomjs-polyfill": "0.0.1",
     "piping": "^0.3.0",
     "postcss-loader": "^0.8.0",
     "postcss-modules": "^0.1.3",

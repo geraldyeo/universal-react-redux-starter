@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-require("babel-register");
-require("babel-polyfill");
+require('babel-register');
+require('babel-polyfill');
 
 var path = require('path');
 var rootDir = path.resolve(__dirname, '..');
@@ -23,6 +23,6 @@ if (__DEVELOPMENT__) {
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools.config'))
 	.development(__DEVELOPMENT__)
-	.server(rootDir, function() {
+	.server(rootDir, function () {
 		require('../server/index');
 	});
