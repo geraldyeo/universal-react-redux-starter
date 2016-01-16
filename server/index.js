@@ -16,7 +16,7 @@ const proxy = httpProxy.createProxyServer({
 });
 
 // Bootstrap express
-configureServer(app, proxy);
+configureServer(app, server, proxy);
 
 if (config.port) {
 	if (config.isProduction) {

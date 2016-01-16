@@ -1,3 +1,8 @@
-module.exports = function getUsers (req, res) {
-	res.send('Get all users');
+export default function getUsers () {
+	return new Promise((resolve) => {
+		resolve({
+			message: 'This came from the api server',
+			time: Date.now()
+		});
+	});
 };

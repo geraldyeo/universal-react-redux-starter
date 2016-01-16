@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 
 import routes from './routes';
 import configureStore from '../common/redux';
@@ -12,20 +12,18 @@ const client = new ApiClient();
 const dest = document.getElementById('root');
 const { store, history } = configureStore(client, window.__data);
 
-// function initSocket () {
-// 	const socket = io('', {path: '/api/ws', transports: ['polling']});
-// 	socket.on('news', (data) => {
-// 		console.log(data);
-// 		socket.emit('my other event', { my: 'data from client' });
-// 	});
-// 	socket.on('msg', (data) => {
-// 		console.log(data);
-// 	});
-
-// 	return socket;
-// }
-
-// global.socket = initSocket();
+function initSocket () {
+	const socket = io('', {path: '/api/ws', transports: ['polling']});
+	socket.on('news', (data) => {
+		console.log(data);
+		socket.emit('my other event', { my: 'data from client' });
+	});
+	socket.on('msg', (data) => {
+		console.log(data);
+	});
+	return socket;
+}
+global.socket = initSocket();
 
 // Router converts <Route> element hierarchy to a route config:
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig

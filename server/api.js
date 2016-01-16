@@ -1,16 +1,17 @@
 import http from 'http';
 import Express from 'express';
-import PrettyError from 'pretty-error';
 import SocketIo from 'socket.io';
 
 import config from '../app/config';
+import configureApi from './config/api';
 
-const pretty = new PrettyError();
 const app = Express();
 const server = new http.Server(app);
-
 const io = new SocketIo(server);
 io.path('/ws');
+
+// Bootstrap api
+configureApi(app);
 
 const bufferSize = 100;
 const messageBuffer = new Array(bufferSize);

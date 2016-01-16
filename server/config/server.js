@@ -1,5 +1,6 @@
 import path from 'path';
 import Express from 'express';
+import compression from 'compression';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
@@ -10,17 +11,26 @@ import configureStore from '../../common/redux';
 import ApiClient from '../../common/helpers/ApiClient';
 import Html from '../../common/helpers/Html';
 
-export default function configureServer (app, proxy) {
+export default function configureServer (app, server, proxy) {
 	// X-Powered-By header has no functional value.
 	// Keeping it makes it easier for an attacker to build the site's profile
 	// It can be removed safely
 	app.disable('x-powered-by');
 
+	app.use(compression());
 	app.use(Express.static(path.join(__dirname, '../..', 'static')));
 
 	// Proxy to API server
 	app.use('/api', (req, res) => {
 		proxy.web(req, res);
+	});
+
+	app.use('/ws', (req, res) => {
+		proxy.web(req, res, {target: targetUrl + '/ws'});
+	});
+
+	server.on('upgrade', (req, socket, head) => {
+		proxy.ws(req, socket, head);
 	});
 
 	// added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
