@@ -1,11 +1,11 @@
-export function mapUrl(availableActions = {}, url = []) {
+export function mapUrl (availableActions = {}, url = []) {
 	const notFound = {action: null, params: []};
 
 	// test for empty input
 	if (url.length === 0 || Object.keys(availableActions).length === 0) {
 		return notFound;
 	}
-	/*eslint-disable */
+
 	const reducer = (prev, current) => {
 		if (prev.action && prev.action[current]) {
 			return {action: prev.action[current], params: []}; // go deeper
@@ -17,7 +17,6 @@ export function mapUrl(availableActions = {}, url = []) {
 			}
 		}
 	};
-	/*eslint-enable */
 
 	const actionAndParams = url.reduce(reducer, {action: availableActions, params: []});
 

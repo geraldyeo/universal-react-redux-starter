@@ -1,13 +1,12 @@
 import http from 'http';
 import httpProxy from 'http-proxy';
-import PrettyError from 'pretty-error';
 import Express from 'express';
 import SocketIo from 'socket.io';
 
 import config from '../app/config';
 import configureServer from './config/server';
 
-const pretty = new PrettyError();
+const targetUrl = 'http://' + config.apiHost + ':' + config.apiPort;
 const app = new Express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
@@ -16,7 +15,7 @@ const proxy = httpProxy.createProxyServer({
 });
 
 // Bootstrap express
-configureServer(app, server, proxy);
+configureServer(app, server, proxy, targetUrl);
 
 if (config.port) {
 	if (config.isProduction) {

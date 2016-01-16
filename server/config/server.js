@@ -5,13 +5,16 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
+import PrettyError from 'pretty-error';
 
 import routes from '../../app/routes';
 import configureStore from '../../common/redux';
 import ApiClient from '../../common/helpers/ApiClient';
 import Html from '../../common/helpers/Html';
 
-export default function configureServer (app, server, proxy) {
+const pretty = new PrettyError();
+
+export default function configureServer (app, server, proxy, targetUrl) {
 	// X-Powered-By header has no functional value.
 	// Keeping it makes it easier for an attacker to build the site's profile
 	// It can be removed safely
@@ -67,6 +70,7 @@ export default function configureServer (app, server, proxy) {
 
 		match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
 			if (error) {
+				console.error('ROUTER ERROR:', pretty.render(error));
 				res.status(500);
 				hydrateOnClient();
 			} else if (redirectLocation) {

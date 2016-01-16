@@ -1,4 +1,3 @@
-import Express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import PrettyError from 'pretty-error';
@@ -42,4 +41,4 @@ export default function configureAPI (app) {
 			res.status(404).end('NOT FOUND');
 		}
 	});
-};
+}

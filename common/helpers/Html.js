@@ -31,7 +31,7 @@ export default class Html extends Component {
 }
 
 Html.propTypes = {
-    assets: PropTypes.object,
-    component: PropTypes.node,
-    store: PropTypes.object
+	assets: PropTypes.object,
+	component: PropTypes.node,
+	store: PropTypes.object
 };
