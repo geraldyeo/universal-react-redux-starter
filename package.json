@@ -4,7 +4,11 @@
   "description": "Universal ReactJS Boilerplate.",
   "main": "bin/server.js",
   "scripts": {
-    "start": "NODE_ENV=production node server/index.js",
+    "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
+    "start-prod": "better-npm-run start-prod",
+    "start-prod-api": "better-npm-run start-prod-api",
+    "build": "webpack --verbose --colors --display-error-details --config webpack/webpack.config.prod.js",
+    "postinstall": "webpack --display-error-details --config webpack/webpack.config.prod.js",
     "lint": "eslint -c .eslintrc app common server",
     "start-dev": "better-npm-run start-dev",
     "start-dev-api": "better-npm-run start-dev-api",
@@ -15,6 +19,24 @@
     "test-node-watch": "mocha $(find ./tests/server -name '*.test.js') -R spec --compilers js:babel-core/register --watch"
   },
   "betterScripts": {
+    "start-prod": {
+      "command": "node ./bin/server.js",
+      "env": {
+        "NODE_PATH": "./server",
+        "NODE_ENV": "production",
+        "BABEL_ENV": "production",
+        "PORT": 9000,
+        "APIPORT": 9030
+      }
+    },
+    "start-prod-api": {
+      "command": "node ./bin/api.js",
+      "env": {
+        "NODE_PATH": "./server",
+        "NODE_ENV": "production",
+        "APIPORT": 9030
+      }
+    },
     "start-dev": {
       "command": "node ./bin/server.js",
       "env": {
@@ -62,6 +84,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.3.13",
     "better-npm-run": "0.0.5",
+    "clean-webpack-plugin": "^0.1.6",
     "cross-env": "^1.0.6",
     "css-loader": "^0.23.1",
     "eslint": "^1.10.3",
@@ -73,6 +96,7 @@
     "eventsource-polyfill": "^0.9.6",
     "expect": "^1.13.4",
     "expect-jsx": "^2.2.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "happiness": "^1.0.7",
     "install": "^0.4.1",
@@ -99,6 +123,7 @@
     "redux-mock-store": "0.0.4",
     "rimraf": "^2.5.0",
     "rucksack-css": "^0.8.5",
+    "strip-loader": "^0.1.1",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
