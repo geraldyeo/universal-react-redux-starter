@@ -9,6 +9,6 @@ function * incrementAsync () {
 	}
 }
 
-export default function * root () {
+export default function * incrementSaga () {
 	yield fork(incrementAsync);
 }

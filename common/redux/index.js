@@ -4,14 +4,14 @@ import { devTools } from 'redux-devtools';
 import { browserHistory } from 'react-router';
 import { syncHistory } from 'redux-simple-router';
 import { createStore, applyMiddleware, compose } from 'redux';
-// import sagaMiddleware from 'redux-saga';
+import sagaMiddleware from 'redux-saga';
 
 import rootReducer from './modules';
-// import rootSaga from './middlewares/incrementSaga';
+import sagas from './sagas';
 import apiClientMiddleware from './middlewares/apiClientMiddleware';
 
 export default function configureStore (client, initialState) {
-	const commonMiddlewares = [apiClientMiddleware(client)]; // sagaMiddleware(rootSaga)
+	const commonMiddlewares = [apiClientMiddleware(client), sagaMiddleware(...sagas)];
 
 	let reduxRouterMiddleware, finalCreateStore;
 	if (__CLIENT__) {
