@@ -4,14 +4,13 @@ var webpack = require('webpack');
 module.exports = function (config) {
 	config.set({
 
-		browsers: ['PhantomJS'],
+		browsers: ['Electron'],
 
 		singleRun: !!process.env.CONTINUOUS_INTEGRATION,
 
 		frameworks: ['tap'],
 
 		files: [
-			'../../node_modules/phantomjs-polyfill/bind-polyfill.js',
 			'tests.webpack.js'
 		],
 
@@ -30,7 +29,7 @@ module.exports = function (config) {
 			require('karma-webpack'),
 			require('karma-tap'),
 			require('karma-tap-reporter'),
-			require('karma-phantomjs-launcher'),
+			require('karma-electron-launcher'),
 			require('karma-sourcemap-loader'),
 			require('karma-coverage')
 		],
