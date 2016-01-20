@@ -3,22 +3,23 @@ var webpack = require('webpack');
 
 module.exports = function (config) {
 	config.set({
+
 		browsers: ['PhantomJS'],
 
 		singleRun: !!process.env.CONTINUOUS_INTEGRATION,
 
-		frameworks: [ 'tap' ],
+		frameworks: ['tap'],
 
 		files: [
-			'../node_modules/phantomjs-polyfill/bind-polyfill.js',
+			'../../node_modules/phantomjs-polyfill/bind-polyfill.js',
 			'tests.webpack.js'
 		],
 
 		preprocessors: {
-			'tests.webpack.js': [ 'webpack', 'sourcemap' ]
+			'tests.webpack.js': ['webpack', 'sourcemap']
 		},
 
-		reporters: [ 'tap', 'coverage' ],
+		reporters: ['tap', 'coverage'],
 
 		coverageReporter: {
 			type: 'text',
@@ -42,10 +43,10 @@ module.exports = function (config) {
 			context: path.resolve(__dirname, '..'),
 			module: {
 				preLoaders: [
-					{ test: /\.js$/, exclude: /(tests|node_modules)/, loader: 'isparta' }
+					{test: /\.js$/, exclude: /(tests|node_modules)/, loader: 'isparta'}
 				],
 				loaders: [
-					{ test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel' }
+					{test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel'}
 				]
 			},
 			resolve: {
