@@ -4,6 +4,12 @@ import { renderToString } from 'react-dom/server';
 import Helmet from 'react-helmet';
 
 export default class Html extends Component {
+	static propTypes = {
+		assets: PropTypes.object,
+		component: PropTypes.node,
+		store: PropTypes.object
+	};
+
 	render () {
 		const { assets, component, store } = this.props;
 		const content = component ? renderToString(component) : '';
@@ -29,9 +35,3 @@ export default class Html extends Component {
 		);
 	}
 }
-
-Html.propTypes = {
-	assets: PropTypes.object,
-	component: PropTypes.node,
-	store: PropTypes.object
-};
