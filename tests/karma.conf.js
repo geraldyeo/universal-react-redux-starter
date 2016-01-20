@@ -7,7 +7,7 @@ module.exports = function (config) {
 
 		singleRun: !!process.env.CONTINUOUS_INTEGRATION,
 
-		frameworks: [ 'mocha' ],
+		frameworks: [ 'tap' ],
 
 		files: [
 			'../node_modules/phantomjs-polyfill/bind-polyfill.js',
@@ -18,22 +18,34 @@ module.exports = function (config) {
 			'tests.webpack.js': [ 'webpack', 'sourcemap' ]
 		},
 
-		reporters: [ 'mocha' ],
+		reporters: [ 'tap', 'coverage' ],
+
+		coverageReporter: {
+			type: 'text',
+			dir: 'coverage/'
+		},
 
 		plugins: [
 			require('karma-webpack'),
-			require('karma-mocha'),
-			require('karma-mocha-reporter'),
+			require('karma-tap'),
+			require('karma-tap-reporter'),
 			require('karma-phantomjs-launcher'),
-			require('karma-sourcemap-loader')
+			require('karma-sourcemap-loader'),
+			require('karma-coverage')
 		],
 
 		webpack: {
+			node : {
+				fs: 'empty'
+			},
 			devtool: 'inline-source-map',
 			context: path.resolve(__dirname, '..'),
 			module: {
+				preLoaders: [
+					{ test: /\.js$/, exclude: /(tests|node_modules)/, loader: 'isparta' }
+				],
 				loaders: [
-					{ test: /\.(js|jsx)$/, exclude: /node_modules/, loaders: ['babel'] }
+					{ test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel' }
 				]
 			},
 			resolve: {

@@ -1,7 +1,7 @@
 import expect, { createSpy, spyOn, isSpy } from 'expect';
+import tape from 'tape';
 
-describe('Users', () => {
-	it('should pass', () => {
-		expect(true).toBe(true);
-	});
+tape('Users', (test) => {
+	test.equal(true, false, 'it should fail too');
+	test.end();
 });
