@@ -23,6 +23,6 @@ module.exports = {
 		svg: {
 			extension: 'svg',
 			parser: WebpackIsomorphicToolsPlugin.url_loader_parser
-		},
+		}
 	}
 };
