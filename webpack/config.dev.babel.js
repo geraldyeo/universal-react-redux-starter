@@ -1,19 +1,19 @@
-require('babel-polyfill');
+import fs from 'fs';
+import path from 'path';
+import webpack from 'webpack';
+import rucksack from 'rucksack-css';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
-var fs = require('fs');
-var path = require('path');
-var webpack = require('webpack');
-var rucksack = require('rucksack-css');
-var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools.config'));
+import webpackIsomorphicToolsConfig from './isomorphic-tools.config';
 
-var assetsPath = path.resolve(__dirname, '../static/dist');
-var host = (process.env.HOST || 'localhost');
-var port = parseInt(process.env.PORT, 10) + 1 || 9001;
-var hotMiddlewareScript = 'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr';
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicToolsConfig);
+const assetsPath = path.resolve(__dirname, '../static/dist');
+const host = (process.env.HOST || 'localhost');
+const port = parseInt(process.env.PORT, 10) + 1 || 9001;
+const hotMiddlewareScript = 'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr';
 
-var babelrc = fs.readFileSync('./.babelrc');
-var babelrcObject = {};
+const babelrc = fs.readFileSync('./.babelrc');
+let babelrcObject = {};
 
 try {
 	babelrcObject = JSON.parse(babelrc);
@@ -25,7 +25,7 @@ try {
 babelrcObject.presets = babelrcObject.presets || [];
 babelrcObject.plugins = babelrcObject.plugins || [];
 
-var commonLoaders = [
+const commonLoaders = [
 	{
 		test: /\.(js|jsx)$/,
 		exclude: /node_modules/,
@@ -50,7 +50,7 @@ var commonLoaders = [
 	}
 ];
 
-module.exports = {
+export default {
 	devtool: 'inline-source-map',
 	context: path.resolve(__dirname, '..'),
 	entry: {

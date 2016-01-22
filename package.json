@@ -7,8 +7,8 @@
     "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
     "start-prod": "better-npm-run start-prod",
     "start-prod-api": "better-npm-run start-prod-api",
-    "build": "webpack --verbose --colors --display-error-details --config webpack/webpack.config.prod.js",
-    "postinstall": "webpack --display-error-details --config webpack/webpack.config.prod.js",
+    "build": "webpack --verbose --colors --display-error-details --config ./webpack/config.prod.js",
+    "postinstall": "webpack --display-error-details --config ./webpack/config.prod.js",
     "lint": "eslint -c .eslintrc app common server",
     "start-dev": "better-npm-run start-dev",
     "start-dev-api": "better-npm-run start-dev-api",
@@ -55,7 +55,7 @@
       }
     },
     "watch-client": {
-      "command": "node webpack/webpack-server.dev.js",
+      "command": "node ./bin/server.dev.js",
       "env": {
         "UV_THREADPOOL_SIZE": 100,
         "NODE_PATH": "./server"

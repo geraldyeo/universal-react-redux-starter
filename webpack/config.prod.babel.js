@@ -1,18 +1,18 @@
-require('babel-polyfill');
+import path from 'path';
+import webpack from 'webpack';
+import CleanPlugin from 'clean-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import strip from 'strip-loader';
+import rucksack from 'rucksack-css';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 
-var path = require('path');
-var webpack = require('webpack');
-var CleanPlugin = require('clean-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var strip = require('strip-loader');
-var rucksack = require('rucksack-css');
-var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools.config'));
+import webpackIsomorphicToolsConfig from './isomorphic-tools.config';
 
-var relativeAssetsPath = '../static/dist';
-var assetsPath = path.join(__dirname, relativeAssetsPath);
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicToolsConfig);
+const relativeAssetsPath = '../static/dist';
+const assetsPath = path.join(__dirname, relativeAssetsPath);
 
-var commonLoaders = [
+const commonLoaders = [
 	{
 		test: /\.(js|jsx)$/,
 		exclude: /node_modules/,
@@ -32,7 +32,7 @@ var commonLoaders = [
 	}
 ];
 
-module.exports = {
+export default {
 	devtool: 'source-map',
 	context: path.resolve(__dirname, '..'),
 	entry: {
