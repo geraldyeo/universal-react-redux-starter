@@ -43,7 +43,7 @@ export default {
 			__SERVER__: false,
 			__PRODUCTION__: false,
 			__DEVELOPMENT__: true,
-			__DEVTOOLS__: false
+			__DEVTOOLS__: true
 		}),
 		webpackIsomorphicToolsPlugin.development()
 	],
