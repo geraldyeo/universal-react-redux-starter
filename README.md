@@ -35,8 +35,8 @@ This is just my personal boilerplate, it may or may not be a good fit for your p
 
 This boilerplate is a combination of the various examples out there, and all credits are theirs. All I did was to update all the dependencies to the latest.
 
-[Frontend Boilerplate](https://github.com/tj/frontend-boilerplate)
-[React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example)
+[Frontend Boilerplate](https://github.com/tj/frontend-boilerplate)  
+[React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example)  
 [react-webpack-node](https://github.com/choonkending/react-webpack-node)
 
 # License
