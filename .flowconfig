@@ -1,0 +1,11 @@
+[ignore]
+.*/static/.*
+
+[include]
+
+[libs]
+./node_modules
+
+[options]
+strip_root=true
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
