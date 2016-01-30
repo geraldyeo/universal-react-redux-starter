@@ -1,7 +1,8 @@
 .DS_Store
 .idea
 node_modules
-npm-debug.log
 dist
+npm-debug.log
+.env
 *.sublime-workspace
 webpack-assets.json

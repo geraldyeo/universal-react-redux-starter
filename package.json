@@ -124,7 +124,6 @@
     "karma-tap-reporter": "0.0.6",
     "karma-webpack": "^1.7.0",
     "nock": "^6.0.1",
-    "npm": "^3.5.3",
     "piping": "^0.3.0",
     "postcss-loader": "^0.8.0",
     "postcss-modules": "^0.1.3",
