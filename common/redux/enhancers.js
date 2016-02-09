@@ -17,7 +17,7 @@ export default function getEnhancers (client) {
 			middlewares.concat(
 				applyMiddleware(createLogger()),
 				DevTools.instrument(),
-				(window.devToolsExtension ? window.devToolsExtension() : f => f)
+				(window.devToolsExtension ? window.devToolsExtension() : (f) => f)
 			);
 		}
 		enhancers = compose(
